@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TITRA · Uji Isi, Bukan Cuma Label</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f7f6f2;--card:#ffffff;--ink:#14213d;--mut:#5b6474;--line:#e6e3da;
+ --pri:#6c3cf0;--pri-2:#9b6bff;--teal:#0fa3a3;--pink:#ff4d8d;--lime:#7ac943;--yel:#f6c445;--red:#e5484d;--grn:#1f9d6b;
+ --grad:linear-gradient(135deg,#6c3cf0 0%,#0fa3a3 100%);
+ --sh:0 1px 2px rgba(20,33,61,.06),0 8px 24px rgba(20,33,61,.06);
+ --sh-h:0 2px 4px rgba(20,33,61,.08),0 16px 36px rgba(108,60,240,.14);
+ --r:16px;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.55;
+ background-image:radial-gradient(circle at 1px 1px,rgba(20,33,61,.07) 1px,transparent 0);background-size:22px 22px}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;letter-spacing:-.02em;margin:0}
+.mono{font-family:"JetBrains Mono",monospace}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pri-2);outline-offset:2px;border-radius:8px}
+svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* TOP NAV */
+header{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(247,246,242,.82);border-bottom:1px solid var(--line)}
+.bar{max-width:1180px;margin:auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:20px}
+.logo b{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px rgba(108,60,240,.35)}
+nav.tabs{display:flex;gap:4px;background:#ecebe5;padding:4px;border-radius:12px;margin-left:auto}
+nav.tabs button{border:0;background:none;padding:9px 14px;border-radius:9px;display:flex;gap:8px;align-items:center;font-weight:600;color:var(--mut);min-height:40px;transition:.2s var(--ease)}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.on{background:#fff;color:var(--pri);box-shadow:var(--sh)}
+main{max-width:1180px;margin:auto;padding:28px 20px 110px}
+section{display:none;animation:in .45s var(--ease)}section.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* COMMON */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:20px;transition:.25s var(--ease)}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--pri);background:#efe9ff;padding:5px 10px;border-radius:999px}
+.h-sec{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.h-sec h1{font-size:34px;margin-top:8px}.h-sec p{color:var(--mut);margin:6px 0 0;max-width:620px}
+.btn{border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:11px 18px;border-radius:12px;font-weight:600;display:inline-flex;gap:8px;align-items:center;min-height:44px;transition:.2s var(--ease)}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn.pri{background:var(--grad);color:#fff;border:0;box-shadow:0 8px 20px rgba(108,60,240,.3)}
+.btn.pri:hover{box-shadow:0 12px 28px rgba(108,60,240,.4)}
+.btn:disabled{opacity:.45;pointer-events:none}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
+.c-merah{background:#fde8e8;color:#c0262b}.c-kuning{background:#fff4d6;color:#9a6a00}.c-hijau{background:#e3f6ee;color:#14794f}.c-abu{background:#efeee9;color:var(--mut)}.c-ungu{background:#efe9ff;color:var(--pri)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.grid{display:grid;gap:16px}
+.muted{color:var(--mut)}.small{font-size:13px}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;margin-bottom:26px}
+.hero h1{font-size:54px;line-height:1.02;margin:14px 0}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:17px;color:var(--mut);max-width:540px}
+.lab{position:relative;background:linear-gradient(180deg,#fff,#f3f0ff);border-radius:24px;padding:18px;border:1px solid var(--line);box-shadow:var(--sh);text-align:center}
+.lab svg{width:100%;max-width:300px;height:auto}
+.lab .ctr{display:flex;gap:10px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+.lab .msg{min-height:44px;font-weight:600;margin-top:10px}
+#liquid{transition:fill .6s var(--ease)}
+.drop{animation:fall .6s ease-in forwards}
+@keyframes fall{from{transform:translateY(0);opacity:1}to{transform:translateY(118px);opacity:0}}
+.stats{grid-template-columns:repeat(4,1fr)}
+.stat{position:relative;overflow:hidden}
+.stat .n{font-family:"Space Grotesk";font-size:36px;font-weight:700;line-height:1}
+.stat .n small{font-size:18px}
+.stat::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:var(--grad);opacity:.08}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;counter-reset:s}
+.flowc{cursor:pointer}.flowc:hover{transform:translateY(-3px);box-shadow:var(--sh-h);border-color:#d6caff}
+.flowc .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;margin-bottom:12px}
+.flowc h3{font-size:17px}.flowc p{margin:4px 0 0;color:var(--mut);font-size:13.5px}
+.three{grid-template-columns:repeat(3,1fr);margin-top:16px}
+.no{display:flex;gap:12px;align-items:flex-start}.no .x{width:32px;height:32px;border-radius:50%;background:#fde8e8;color:var(--red);display:grid;place-items:center;flex-shrink:0}
+
+/* PANTAU */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.seg{display:flex;background:#ecebe5;border-radius:12px;padding:4px}
+.seg button{border:0;background:none;padding:8px 14px;border-radius:9px;font-weight:600;color:var(--mut);min-height:38px}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.pgrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.pcard{position:relative;cursor:pointer}
+.pcard:hover{box-shadow:var(--sh-h);transform:translateY(-2px)}
+.pcard.sel{border-color:var(--pri);box-shadow:0 0 0 3px rgba(108,60,240,.18),var(--sh-h)}
+.ptop{display:flex;gap:14px;align-items:center}
+.ring{--v:0;width:62px;height:62px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+ background:conic-gradient(var(--rc,var(--pri)) calc(var(--v)*1%),#eeebe3 0);transition:--v .6s}
+.ring span{width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:"JetBrains Mono";font-weight:700;font-size:15px}
+.pcard h3{font-size:16px}.pcard .cat{font-size:12.5px;color:var(--mut)}
+.toggles{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tg{border:1.5px dashed var(--line);background:#faf9f6;border-radius:999px;padding:6px 10px;font-size:12.5px;font-weight:600;color:var(--mut);min-height:34px;transition:.18s}
+.tg.on{border-style:solid;background:#efe9ff;border-color:#cbb8ff;color:var(--pri)}
+.tg:hover{border-color:var(--pri-2)}
+.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.hint{background:linear-gradient(90deg,#efe9ff,#e2f6f6);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.hit{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hit .bar2{flex:1;min-width:180px;height:12px;background:#fff;border-radius:6px;overflow:hidden}
+.hit .bar2 i{display:block;height:100%;border-radius:6px;transition:width .8s var(--ease)}
+
+/* UJI */
+.steps{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.st{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#ecebe5;color:var(--mut);font-weight:600;font-size:13.5px}
+.st.on{background:var(--ink);color:#fff}.st.done{background:#e3f6ee;color:#14794f}
+.ujigrid{grid-template-columns:1fr 1fr}
+.strip{display:flex;gap:18px;align-items:center}
+.paper{width:86px;height:190px;border-radius:12px;background:#fff;border:1px solid var(--line);position:relative;box-shadow:var(--sh);flex-shrink:0;overflow:hidden}
+.paper .pad{position:absolute;left:14px;right:14px;top:22px;height:64px;border-radius:8px;transition:background .5s var(--ease)}
+.paper .lbl{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:11px;color:var(--mut);font-weight:600}
+.scale{height:14px;border-radius:7px;background:linear-gradient(90deg,#f6d33c,#b9d43a,#59b84a,#1f9d6b);position:relative;margin:10px 0 2px}
+.scale i{position:absolute;top:-5px;width:4px;height:24px;background:var(--ink);border-radius:2px;transition:left .3s var(--ease)}
+input[type=range]{width:100%;accent-color:var(--pri);height:28px}
+.drop-zone{border:2px dashed #cbb8ff;border-radius:14px;padding:14px;text-align:center;color:var(--pri);font-weight:600;cursor:pointer;background:#faf8ff;transition:.2s}
+.drop-zone:hover{background:#efe9ff}
+canvas{max-width:100%;border-radius:10px;margin-top:10px;cursor:crosshair;display:none}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:12px;font-weight:600;display:flex;gap:10px;align-items:center}
+label.f{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+input.in,select.in{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font:inherit;background:#fff;min-height:44px}
+input.in:focus{border-color:var(--pri);outline:0;box-shadow:0 0 0 4px rgba(108,60,240,.12)}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.presets button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;min-height:34px}
+.presets button:hover{border-color:var(--pri);color:var(--pri)}
+.gauge{text-align:center;margin-top:8px}
+.gauge svg{width:100%;max-width:320px}
+#needle{transform-origin:160px 160px;transition:transform 1s cubic-bezier(.3,1.4,.5,1)}
+.big{font-family:"Space Grotesk";font-size:42px;font-weight:700;line-height:1}
+
+/* LAPOR */
+.kanban{grid-template-columns:repeat(3,1fr);align-items:start}
+.col{background:#efeee8;border-radius:18px;padding:12px;min-height:200px}
+.col h3{font-size:15px;display:flex;align-items:center;gap:8px;padding:4px 6px 10px}
+.col h3 .cnt{margin-left:auto;background:#fff;border-radius:999px;padding:1px 9px;font-size:12px}
+.kcard{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:var(--sh);cursor:pointer;border:2px solid transparent;transition:.2s}
+.kcard:hover{transform:translateY(-2px)}.kcard.sel{border-color:var(--pri)}
+.kcard .r{font-family:"JetBrains Mono";font-size:12.5px;color:var(--mut)}
+.ticket{background:#fff;border-radius:18px;box-shadow:var(--sh);border:1px solid var(--line);overflow:hidden;position:relative}
+.ticket .th{background:var(--grad);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.ticket .tb{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:14px}
+.ticket .tb div span{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600}
+.ticket .perf{border-top:2px dashed var(--line);margin:0 20px}
+.ticket .tf{padding:14px 20px;display:flex;gap:10px;flex-wrap:wrap}
+.stamp{position:absolute;right:24px;top:80px;border:3px solid var(--grn);color:var(--grn);font-family:"Space Grotesk";font-weight:700;padding:6px 12px;border-radius:10px;transform:rotate(-12deg) scale(0);opacity:0;transition:.4s cubic-bezier(.3,1.6,.5,1)}
+.stamp.on{transform:rotate(-12deg) scale(1);opacity:.9}
+.empty{padding:40px;text-align:center;color:var(--mut)}
+
+/* DASBOR */
+.dgrid{grid-template-columns:1.1fr .9fr}
+.ttd{display:flex;gap:22px;align-items:center}
+.bigring{width:150px;height:150px}
+.bigring circle{fill:none;stroke-width:14}
+#ttdArc{transition:stroke-dashoffset 1s var(--ease);stroke:url(#gg);stroke-linecap:round}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:10px}
+.srow button{border:0;background:none;padding:0}
+.road{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:10px}
+.road::before{content:"";position:absolute;left:0;right:0;top:19px;height:4px;background:linear-gradient(90deg,var(--pri),var(--teal));border-radius:2px}
+.rn{padding:0 8px;position:relative}
+.rn .b{width:42px;height:42px;border-radius:50%;background:#fff;border:4px solid var(--pri);display:grid;place-items:center;font-weight:700;font-family:"JetBrains Mono";font-size:12px;position:relative;z-index:1;margin-bottom:10px}
+.rn:nth-child(3) .b,.rn:nth-child(4) .b{border-color:var(--teal)}
+
+/* TOAST + MOBILE */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:.3s var(--ease);z-index:50;display:flex;gap:10px;align-items:center;box-shadow:0 12px 30px rgba(20,33,61,.3)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.bnav{display:none}
+@media (max-width:900px){
+ nav.tabs{display:none}
+ .bnav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:30;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+ .bnav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--mut);padding:6px 0;min-height:52px}
+ .bnav button.on{color:var(--pri)}
+ .hero,.ujigrid,.dgrid{grid-template-columns:1fr}.hero h1{font-size:40px}
+ .stats,.flow{grid-template-columns:1fr 1fr}.three,.kanban{grid-template-columns:1fr}
+ .road{grid-template-columns:1fr 1fr;row-gap:20px}.road::before{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+ <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></symbol>
+ <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/></symbol>
+ <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></symbol>
+ <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+ <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></symbol>
+ <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+ <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+ <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+ <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></symbol>
+</svg>
+
+<header><div class="bar">
+ <div class="logo"><b><svg class="i"><use href="#i-drop"/></svg></b>TITRA</div>
+ <nav class="tabs" id="tabs" aria-label="Navigasi utama"></nav>
+</div></header>
+
+<main>
+<!-- BERANDA -->
+<section id="beranda" class="on">
+ <div class="hero">
+  <div>
+   <span class="eyebrow"><svg class="i" style="width:14px;height:14px"><use href="#i-flask"/></svg>Generasi Z · Indonesia Emas 2045</span>
+   <h1>Label bisa benar.<br><em>Isi harus dibuktikan.</em></h1>
+   <p class="lead">TITRA adalah jaringan uji kosmetik berbasis kolorimetri ponsel dan laboratorium kampus. Mahasiswa kimia menyaring krim berisiko, lalu bukti terukurnya dikirim ke Balai Besar POM.</p>
+   <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+    <button class="btn pri" onclick="go('pantau')"><svg class="i"><use href="#i-radar"/></svg>Mulai memantau</button>
+    <button class="btn" onclick="go('uji')"><svg class="i"><use href="#i-flask"/></svg>Coba uji warna</button>
+   </div>
+  </div>
+  <div class="lab" aria-label="Simulasi titrasi">
+   <div class="small muted" style="font-weight:600">Coba sendiri, teteskan indikator ke sampel krim</div>
+   <svg viewBox="0 0 300 270" id="labsvg">
+    <defs><linearGradient id="glass" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#e9e4ff" stop-opacity=".6"/></linearGradient></defs>
+    <rect x="140" y="6" width="20" height="96" rx="6" fill="url(#glass)" stroke="#14213d" stroke-width="2"/>
+    <rect x="143" y="12" width="14" height="80" rx="4" fill="#9b6bff" opacity=".55" id="buretLiq"/>
+    <path d="M146 102h8v14h-8z" fill="#14213d"/>
+    <g id="drops"></g>
+    <path d="M90 150h120l-14 100a12 12 0 0 1-12 10H116a12 12 0 0 1-12-10z" fill="url(#glass)" stroke="#14213d" stroke-width="2.5"/>
+    <path id="liquid" d="M98 190h104l-9 58a8 8 0 0 1-8 7H115a8 8 0 0 1-8-7z" fill="#f6d33c"/>
+    <path d="M86 150h128" stroke="#14213d" stroke-width="3" stroke-linecap="round"/>
+   </svg>
+   <div class="msg" id="labmsg" aria-live="polite">Tetes 0 dari 5</div>
+   <div class="ctr">
+    <button class="btn pri" onclick="tetes()"><svg class="i"><use href="#i-drop"/></svg>Teteskan</button>
+    <button class="btn" onclick="resetLab()" aria-label="Ulangi simulasi"><svg class="i"><use href="#i-reset"/></svg></button>
+   </div>
+  </div>
+ </div>
+
+ <div class="grid stats">
+  <div class="card stat"><div class="n" data-count="94">0</div><div class="small muted" style="margin-top:6px">dari 100 tautan kosmetik daring melanggar, Mei 2026 (BPOM)</div></div>
+  <div class="card stat"><div class="n"><span data-count="23">0</span><small>%</small></div><div class="small muted" style="margin-top:6px">tautan berbahan dilarang, patroli Nov 2025 (BPOM)</div></div>
+  <div class="card stat"><div class="n"><span data-count="2">0</span><small> dari 5</small></div><div class="small muted" style="margin-top:6px">krim terdaftar ternyata bermerkuri (Purwanitiningsih &amp; Hariyanti, 2023)</div></div>
+  <div class="card stat"><div class="n"><span data-count="3104">0</span><small>×</small></div><div class="small muted" style="margin-top:6px">kadar merkuri tertinggi melampaui batas 1 mg/kg (Komarudin, 2024)</div></div>
+ </div>
+
+ <div class="flow">
+  <div class="card flowc" onclick="go('pantau')" tabindex="0"><div class="ic" style="background:#6c3cf0"><svg class="i"><use href="#i-radar"/></svg></div><h3>1 · TITRA Pantau</h3><p>Pilih produk paling berisiko dengan Skor Prioritas Sampel.</p></div>
+  <div class="card flowc" onclick="go('uji')" tabindex="0"><div class="ic" style="background:#0fa3a3"><svg class="i"><use href="#i-flask"/></svg></div><h3>2 · TITRA Uji</h3><p>Uji cepat warna di ponsel, lalu konfirmasi di lab kampus.</p></div>
+  <div class="card flowc" onclick="go('lapor')" tabindex="0"><div class="ic" style="background:#ff4d8d"><svg class="i"><use href="#i-send"/></svg></div><h3>3 · TITRA Lapor</h3><p>Kelas merah dikirim sebagai paket bukti ke BBPOM.</p></div>
+  <div class="card flowc" onclick="go('dasbor')" tabindex="0"><div class="ic" style="background:#14213d"><svg class="i"><use href="#i-chart"/></svg></div><h3>4 · Dasbor</h3><p>Ukur Tingkat Temu Dini, bukan jumlah unduhan.</p></div>
+ </div>
+
+ <div class="grid three">
+  <div class="card no"><div class="x"><svg class="i" style="width:16px"><use href="#i-x"/></svg></div><div><h3 style="font-size:16px">Tidak menerbitkan izin</h3><p class="small muted" style="margin:4px 0 0">Izin edar tetap kewenangan BPOM.</p></div></div>
+  <div class="card no"><div class="x"><svg class="i" style="width:16px"><use href="#i-x"/></svg></div><div><h3 style="font-size:16px">Tidak mengumumkan merek</h3><p class="small muted" style="margin:4px 0 0">Merek dibahas setelah pengumuman resmi.</p></div></div>
+  <div class="card no"><div class="x"><svg class="i" style="width:16px"><use href="#i-x"/></svg></div><div><h3 style="font-size:16px">Tidak menggantikan uji resmi</h3><p class="small muted" style="margin:4px 0 0">TITRA menyaring, BPOM memastikan.</p></div></div>
+ </div>
+</section>
+
+<!-- PANTAU -->
+<section id="pantau">
+ <div class="h-sec">
+  <div><span class="eyebrow">Modul 1</span><h1>TITRA Pantau</h1><p>Nyalakan atau matikan faktor risiko di tiap kartu. Skor dan urutan prioritas berubah seketika.</p></div>
+  <button class="btn pri" onclick="addProduct()"><svg class="i"><use href="#i-plus"/></svg>Tambah produk</button>
+ </div>
+ <div class="hint">
+  <svg class="i" style="color:var(--pri)"><use href="#i-info"/></svg>
+  <div style="flex:1">
+   <div class="small" style="font-weight:600;margin-bottom:6px">Mengapa prioritas penting? Uji hitung data Komarudin (2024)</div>
+   <div class="hit small"><span style="width:110px">Tanpa prioritas</span><div class="bar2"><i style="width:0;background:#b9b4a6" data-w="30"></i></div><b class="mono">3/10 · 30%</b></div>
+   <div class="hit small" style="margin-top:6px"><span style="width:110px">Krim pemutih</span><div class="bar2"><i style="width:0;background:var(--grad)" data-w="60"></i></div><b class="mono">3/5 · 60%</b></div>
+  </div>
+ </div>
+ <div class="toolbar">
+  <div class="seg" role="tablist" id="filt">
+   <button class="on" data-f="all">Semua</button><button data-f="Tinggi">Tinggi</button><button data-f="Sedang">Sedang</button><button data-f="Rendah">Rendah</button>
+  </div>
+  <span class="small muted" id="pcount"></span>
+ </div>
+ <div class="grid pgrid" id="pgrid"></div>
+</section>
+
+<!-- UJI -->
+<section id="uji">
+ <div class="h-sec">
+  <div><span class="eyebrow">Modul 2</span><h1>TITRA Uji</h1><p>Lapis 1 uji cepat warna oleh mahasiswa. Lapis 2 konfirmasi kadar di laboratorium kampus.</p></div>
+  <div class="card" style="padding:12px 16px"><div class="small muted">Sampel aktif</div><select class="in" id="selSample" style="margin-top:4px;min-width:220px"></select></div>
+ </div>
+ <div class="steps" id="steps"></div>
+ <div class="grid ujigrid">
+  <div class="card">
+   <h3 style="font-size:19px">Lapis 1 · Uji cepat warna</h3>
+   <p class="small muted">Geser untuk menyimulasikan reaksi, atau unggah foto kertas uji lalu ketuk bantalannya.</p>
+   <div class="strip" style="margin-top:12px">
+    <div class="paper"><div class="pad" id="pad"></div><div class="lbl">KERTAS UJI Hg</div></div>
+    <div style="flex:1">
+     <label class="f" for="rg">Intensitas reaksi</label>
+     <input type="range" min="0" max="100" value="8" id="rg">
+     <div class="scale"><i id="mark"></i></div>
+     <div class="small muted" style="display:flex;justify-content:space-between"><span>kuning · negatif</span><span>hijau · positif</span></div>
+     <div class="mono small" id="rgbOut" style="margin-top:8px"></div>
+    </div>
+   </div>
+   <label class="drop-zone" style="display:block;margin-top:14px"><input type="file" accept="image/*" id="img" hidden>Unggah foto kertas uji</label>
+   <canvas id="cv" aria-label="Foto kertas uji, ketuk untuk membaca warna"></canvas>
+   <div id="verdict1"></div>
+   <button class="btn pri" style="margin-top:12px;width:100%" onclick="saveScreen()"><svg class="i"><use href="#i-check"/></svg>Simpan hasil uji cepat</button>
+  </div>
+  <div class="card">
+   <h3 style="font-size:19px">Lapis 2 · Konfirmasi laboratorium</h3>
+   <p class="small muted">Masukkan kadar merkuri dari instrumen (AAS atau ICP-OES) di bawah supervisi dosen.</p>
+   <label class="f" for="kadar">Kadar merkuri terukur (mg/kg)</label>
+   <input class="in mono" type="number" min="0" step="0.01" id="kadar" placeholder="contoh 1754.39">
+   <div class="presets"><span class="small muted" style="align-self:center">Data Komarudin (2024):</span>
+    <button onclick="setK(3103.70)">3.103,70</button><button onclick="setK(1754.39)">1.754,39</button><button onclick="setK(1057.60)">1.057,60</button><button onclick="setK(0.4)">0,4</button></div>
+   <div class="gauge">
+    <svg viewBox="0 0 320 190" aria-hidden="true">
+     <path d="M30 160A130 130 0 0 1 95 47" stroke="#1f9d6b" stroke-width="22" fill="none"/>
+     <path d="M95 47A130 130 0 0 1 225 47" stroke="#f6c445" stroke-width="22" fill="none"/>
+     <path d="M225 47A130 130 0 0 1 290 160" stroke="#e5484d" stroke-width="22" fill="none"/>
+     <text x="24" y="182" font-size="11" fill="#5b6474">0,1</text><text x="150" y="20" font-size="11" fill="#5b6474">1×</text><text x="278" y="182" font-size="11" fill="#5b6474">10.000×</text>
+     <g id="needle"><path d="M160 160L160 46" stroke="#14213d" stroke-width="5" stroke-linecap="round"/><circle cx="160" cy="160" r="11" fill="#14213d"/></g>
+    </svg>
+    <div class="small muted">Rasio Lampau Batas (skala log, batas 1 mg/kg)</div>
+    <div class="big" id="rlb">–</div>
+    <div id="rlbTag" style="margin-top:8px"></div>
+   </div>
+   <button class="btn pri" style="margin-top:14px;width:100%" onclick="saveConfirm()"><svg class="i"><use href="#i-check"/></svg>Simpan hasil konfirmasi</button>
+  </div>
+ </div>
+</section>
+
+<!-- LAPOR -->
+<section id="lapor">
+ <div class="h-sec"><div><span class="eyebrow">Modul 3</span><h1>TITRA Lapor</h1><p>Hanya kartu di kolom merah yang bisa dijadikan paket bukti. Ketuk kartu untuk melihat tiketnya.</p></div></div>
+ <div class="grid kanban" id="kanban"></div>
+ <h2 style="font-size:22px;margin:26px 0 12px">Paket bukti</h2>
+ <div class="grid" style="grid-template-columns:1fr 1.2fr;gap:16px" id="lapWrap">
+  <div class="card">
+   <label class="f" for="bets">Nomor bets</label><input class="in" id="bets" placeholder="contoh B2611">
+   <label class="f" for="penguji">Mahasiswa penguji</label><input class="in" id="penguji" placeholder="Nama, prodi">
+   <label class="f" for="dosen">Dosen penyelia</label><input class="in" id="dosen" placeholder="Nama dosen">
+   <p class="small muted" style="margin-top:12px">Paket bersifat rahasia dan dikirim lewat HALOBPOM 1500533. Keputusan penarikan sepenuhnya kewenangan BPOM.</p>
+  </div>
+  <div id="ticket"></div>
+ </div>
+</section>
+
+<!-- DASBOR -->
+<section id="dasbor">
+ <div class="h-sec"><div><span class="eyebrow">Ukuran keberhasilan</span><h1>Dasbor</h1><p>Yang diukur adalah seberapa cepat bahaya ditemukan, bukan seberapa banyak aplikasi diunduh.</p></div></div>
+ <div class="grid stats" id="kpi"></div>
+ <div class="grid dgrid" style="margin-top:16px">
+  <div class="card">
+   <h3 style="font-size:19px">Tingkat Temu Dini</h3>
+   <p class="small muted">Proporsi paket kelas merah yang dikonfirmasi BPOM sebelum produknya masuk daftar peringatan publik. Ketuk status untuk menyimulasikan tanggapan BPOM.</p>
+   <div class="ttd">
+    <svg class="bigring" viewBox="0 0 150 150"><defs><linearGradient id="gg"><stop offset="0" stop-color="#6c3cf0"/><stop offset="1" stop-color="#0fa3a3"/></linearGradient></defs>
+     <circle cx="75" cy="75" r="60" stroke="#eeebe3"/><circle id="ttdArc" cx="75" cy="75" r="60" stroke-dasharray="377" stroke-dashoffset="377" transform="rotate(-90 75 75)"/>
+     <text x="75" y="82" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="28" fill="#14213d" id="ttdTxt">0%</text></svg>
+    <div style="flex:1" id="ttdList"></div>
+   </div>
+  </div>
+  <div class="card">
+   <h3 style="font-size:19px;margin-bottom:16px">Peta jalan</h3>
+   <div class="road">
+    <div class="rn"><div class="b">27</div><b>Validasi</b><p class="small muted" style="margin:4px 0 0">2 simpul lab Mataram, ±100 sampel</p></div>
+    <div class="rn"><div class="b">28</div><b>Pilot</b><p class="small muted" style="margin:4px 0 0">BBPOM Mataram, 30 penguji</p></div>
+    <div class="rn"><div class="b">30</div><b>Replikasi</b><p class="small muted" style="margin:4px 0 0">Prodi kimia provinsi lain</p></div>
+    <div class="rn"><div class="b">35</div><b>Integrasi</b><p class="small muted" style="margin:4px 0 0">Masuk sistem pengaduan BPOM</p></div>
+   </div>
+   <div class="hint" style="margin:18px 0 0"><svg class="i" style="color:var(--pri)"><use href="#i-up"/></svg><b>Perluasan skala mengikuti bukti, bukan ambisi.</b></div>
+  </div>
+ </div>
+ <p class="small muted" style="margin-top:18px">Purwarupa esai Lomba Esai Dies Natalis ke-29 HMPS Pendidikan Kimia Universitas Mataram 2026. Semua produk adalah data contoh fiktif.</p>
+</section>
+</main>
+
+<nav class="bnav" id="bnav" aria-label="Navigasi bawah"></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const PAGES=[["beranda","i-home","Beranda"],["pantau","i-radar","Pantau"],["uji","i-flask","Uji"],["lapor","i-send","Lapor"],["dasbor","i-chart","Dasbor"]];
+const F=[["k","Klaim pencerah instan",35],["t","Kategori pernah ditarik",25],["h","Harga jauh di bawah pasar",20],["no","Notifikasi tak ditemukan",20]];
+let P=[
+ {id:1,n:"Krim Contoh A",c:"Krim pencerah",k:1,t:1,h:1,no:1,scr:true,kadar:3103.70,bpom:"dini",sent:true},
+ {id:2,n:"Krim Contoh B",c:"Krim pencerah",k:1,t:1,h:1,no:0,scr:true,kadar:1754.39,bpom:"tunggu",sent:false},
+ {id:3,n:"Krim Contoh C",c:"Krim pencerah",k:1,t:1,h:0,no:0,scr:true,kadar:1057.60,bpom:"tunggu",sent:false},
+ {id:4,n:"Krim Contoh D",c:"Krim pencerah",k:1,t:0,h:0,no:0,scr:true,kadar:null,bpom:null,sent:false},
+ {id:5,n:"Krim Contoh E",c:"Krim pencerah",k:0,t:1,h:0,no:0,scr:false,kadar:0.2,bpom:null,sent:false},
+ {id:6,n:"Losion Contoh F",c:"Losion tubuh",k:0,t:0,h:1,no:0,scr:null,kadar:null,bpom:null,sent:false},
+ {id:7,n:"Serum Contoh G",c:"Serum",k:0,t:0,h:0,no:0,scr:null,kadar:null,bpom:null,sent:false},
+];
+let cur=2,filt="all",gi=0;
+const $=s=>document.getElementById(s);
+const fmt=(x,d=1)=>x.toLocaleString("id-ID",{maximumFractionDigits:d});
+const ico=(id,s="")=>`<svg class="i" ${s}><use href="#${id}"/></svg>`;
+const score=p=>F.reduce((a,[k,,w])=>a+p[k]*w,0);
+const prio=s=>s>=60?["Tinggi","merah","#e5484d"]:s>=35?["Sedang","kuning","#f6c445"]:["Rendah","abu","#b9b4a6"];
+const rlb=p=>p.kadar==null?null:p.kadar/1;
+function kelas(p){const r=rlb(p);if(r!=null)return r>=1?"merah":"hijau";if(p.scr===true)return"kuning";if(p.scr===false)return"hijau";return null}
+const chip=k=>k?`<span class="chip c-${k}"><span class="dot"></span>${k[0].toUpperCase()+k.slice(1)}</span>`:`<span class="chip c-abu">Belum diuji</span>`;
+function toast(m,i="i-check"){const t=$("toast");t.innerHTML=ico(i)+m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2000)}
+
+function navs(){
+ $("tabs").innerHTML=PAGES.map(([id,ic,l])=>`<button data-p="${id}" onclick="go('${id}')">${ico(ic)}${l}</button>`).join("");
+ $("bnav").innerHTML=PAGES.map(([id,ic,l])=>`<button data-p="${id}" onclick="go('${id}')">${ico(ic)}${l}</button>`).join("");
+}
+function go(id){
+ document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));
+ document.querySelectorAll("[data-p]").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
+ history.replaceState(null,"","#"+id);window.scrollTo({top:0,behavior:"smooth"});render();
+ if(id==="beranda")countUp();
+ if(id==="pantau")setTimeout(()=>document.querySelectorAll("[data-w]").forEach(e=>e.style.width=e.dataset.w+"%"),80);
+}
+
+/* BERANDA: titration + counters */
+let nd=0;
+const labCols=["#f6d33c","#d9d63a","#a9cd3f","#6cba4a","#2f9e5b","#1f9d6b"];
+function tetes(){
+ if(nd>=5)return toast("Titik akhir sudah tercapai. Ketuk ulang untuk mencoba lagi","i-info");
+ const g=$("drops"),d=document.createElementNS("http://www.w3.org/2000/svg","circle");
+ d.setAttribute("cx",150);d.setAttribute("cy",122);d.setAttribute("r",5);d.setAttribute("fill","#9b6bff");d.classList.add("drop");g.appendChild(d);
+ setTimeout(()=>d.remove(),650);nd++;
+ $("buretLiq").setAttribute("height",80-nd*12);$("buretLiq").setAttribute("y",12+nd*12);
+ setTimeout(()=>{$("liquid").setAttribute("fill",labCols[nd]);
+  $("labmsg").innerHTML=nd<5?`Tetes ${nd} dari 5 · warna mulai bergeser`:`<span class="chip c-hijau"><span class="dot"></span>Titik akhir</span> Kemasan tak berubah, tetapi isinya kini ketahuan`;},500);
+}
+function resetLab(){nd=0;$("liquid").setAttribute("fill",labCols[0]);$("buretLiq").setAttribute("height",80);$("buretLiq").setAttribute("y",12);$("labmsg").textContent="Tetes 0 dari 5"}
+function countUp(){document.querySelectorAll("[data-count]").forEach(el=>{const to=+el.dataset.count,t0=performance.now();
+ const step=t=>{const k=Math.min(1,(t-t0)/1100),e=1-Math.pow(1-k,3);el.textContent=fmt(Math.round(to*e),0);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)})}
+
+/* PANTAU */
+function renderPantau(){
+ const list=[...P].sort((a,b)=>score(b)-score(a)).filter(p=>filt==="all"||prio(score(p))[0]===filt);
+ $("pgrid").innerHTML=list.map(p=>{const s=score(p),[pl,pc,col]=prio(s);
+  return `<div class="card pcard ${p.id===cur?"sel":""}" onclick="pick(${p.id})" tabindex="0" onkeydown="if(event.key==='Enter')pick(${p.id})">
+   <div class="ptop"><div class="ring" style="--v:${s};--rc:${col}"><span>${s}</span></div>
+    <div><h3 contenteditable="true" spellcheck="false" onclick="event.stopPropagation()" onblur="rename(${p.id},this.textContent)">${p.n}</h3><div class="cat">${p.c}</div><span class="chip c-${pc}" style="margin-top:6px">Prioritas ${pl}</span></div></div>
+   <div class="toggles">${F.map(([k,l])=>`<button class="tg ${p[k]?"on":""}" aria-pressed="${!!p[k]}" onclick="event.stopPropagation();flip(${p.id},'${k}')">${l}</button>`).join("")}</div>
+   <div class="pfoot">${chip(kelas(p))}<button class="btn" style="min-height:38px;padding:7px 12px" onclick="event.stopPropagation();pick(${p.id});go('uji')">${ico("i-flask")}Uji</button></div>
+  </div>`}).join("")||`<div class="empty">Tidak ada produk di kelas ini.</div>`;
+ $("pcount").textContent=`${P.length} produk dipantau · ${P.filter(p=>score(p)>=60).length} prioritas tinggi`;
+}
+function flip(id,k){const p=P.find(x=>x.id===id);p[k]=p[k]?0:1;render();toast(`Skor ${p.n} kini ${score(p)}`,"i-radar")}
+function rename(id,t){const p=P.find(x=>x.id===id);p.n=t.trim()||p.n;render()}
+function pick(id){cur=id;render()}
+function addProduct(){const id=Date.now();P.push({id,n:"Produk Baru "+(P.length+1),c:"Krim pencerah",k:0,t:0,h:0,no:0,scr:null,kadar:null,bpom:null,sent:false});cur=id;filt="all";syncFilt();render();toast("Produk ditambahkan. Ketuk namanya untuk mengganti","i-plus")}
+function syncFilt(){document.querySelectorAll("#filt button").forEach(b=>b.classList.toggle("on",b.dataset.f===filt))}
+$("filt").onclick=e=>{const b=e.target.closest("button");if(!b)return;filt=b.dataset.f;syncFilt();renderPantau()};
+
+/* UJI */
+function lerp(a,b,t){return Math.round(a+(b-a)*t)}
+function colorAt(v){const t=v/100;return[lerp(246,31,t),lerp(211,157,t),lerp(60,107,t)]}
+function showColor(r,g,b,pos){
+ $("pad").style.background=`rgb(${r},${g},${b})`;
+ const s=Math.max(1,r+g+b);gi=Math.max(0,Math.min(100,((g/s)-(r/s))*420+((b/s)*80)));
+ $("mark").style.left=`calc(${pos??gi}% - 2px)`;
+ $("rgbOut").textContent=`RGB ${r}, ${g}, ${b} · indeks hijau ${fmt(gi)}`;
+ const pos2=gi>=40;
+ $("verdict1").innerHTML=`<div class="verdict ${pos2?"c-kuning":"c-hijau"}">${ico(pos2?"i-info":"i-check")}${pos2?"Positif. Wajib konfirmasi laboratorium":"Negatif pada uji cepat"}</div>`;
+}
+$("rg").oninput=e=>{const v=+e.target.value,[r,g,b]=colorAt(v);showColor(r,g,b,v)};
+$("img").onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=$("cv"),x=c.getContext("2d"),k=Math.min(520/im.width,1);c.width=im.width*k;c.height=im.height*k;x.drawImage(im,0,0,c.width,c.height);c.style.display="block";toast("Ketuk bantalan warna pada foto","i-info")};im.src=URL.createObjectURL(f)};
+$("cv").onclick=e=>{const c=$("cv"),b=c.getBoundingClientRect(),x=(e.clientX-b.left)*c.width/b.width,y=(e.clientY-b.top)*c.height/b.height,d=c.getContext("2d").getImageData(Math.max(0,x-4),Math.max(0,y-4),8,8).data;let r=0,g=0,bl=0,n=d.length/4;for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];bl+=d[i+2]}showColor(Math.round(r/n),Math.round(g/n),Math.round(bl/n))};
+function saveScreen(){const p=P.find(x=>x.id===cur);p.scr=gi>=40;render();toast(p.scr?"Uji cepat positif, lanjut ke konfirmasi":"Uji cepat negatif tersimpan",p.scr?"i-info":"i-check")}
+function setK(v){$("kadar").value=v;updG()}
+function updG(){const v=parseFloat($("kadar").value);
+ if(isNaN(v)||v<0){$("rlb").textContent="–";$("rlbTag").innerHTML="";$("needle").style.transform="rotate(-90deg)";return}
+ const r=v/1,lg=Math.log10(Math.max(r,0.1)),ang=-90+((lg+1)/5)*180;
+ $("needle").style.transform=`rotate(${Math.max(-90,Math.min(90,ang))}deg)`;
+ $("rlb").textContent=fmt(r)+"×";
+ $("rlbTag").innerHTML=r>=1?`<span class="chip c-merah"><span class="dot"></span>Kelas merah · melampaui batas</span>`:`<span class="chip c-hijau"><span class="dot"></span>Kelas hijau · di bawah batas</span>`;
+}
+$("kadar").oninput=updG;
+function saveConfirm(){const v=parseFloat($("kadar").value);if(isNaN(v))return toast("Isi kadar dulu atau pilih data contoh","i-info");const p=P.find(x=>x.id===cur);p.kadar=v;if(kelas(p)==="merah"&&!p.bpom)p.bpom="tunggu";render();toast(kelas(p)==="merah"?"Kelas merah. Siapkan paket bukti":"Hasil konfirmasi tersimpan",kelas(p)==="merah"?"i-send":"i-check")}
+$("selSample").onchange=e=>{cur=+e.target.value;render()};
+function renderUji(){
+ const p=P.find(x=>x.id===cur);
+ $("selSample").innerHTML=[...P].sort((a,b)=>score(b)-score(a)).map(x=>`<option value="${x.id}" ${x.id===cur?"selected":""}>${x.n} · skor ${score(x)}</option>`).join("");
+ const k=kelas(p),s1=p.scr!=null,s2=p.kadar!=null;
+ const st=[["Dipilih",true],["Uji cepat",s1],["Konfirmasi",s2],["Kelas "+(k||"–"),!!k&&s2||k==="hijau"]];
+ $("steps").innerHTML=st.map(([l,d],i)=>`<span class="st ${d?"done":(i===st.findIndex(z=>!z[1])?"on":"")}">${d?ico("i-check",'style="width:15px"'):i+1+"."} ${l}</span>`).join("");
+ if(document.activeElement!==$("kadar")){$("kadar").value=p.kadar??"";updG()}
+}
+
+/* LAPOR */
+function renderLapor(){
+ const cols=[["kuning","Perlu konfirmasi","#f6c445"],["merah","Siap dilaporkan","#e5484d"],["hijau","Arsip aman","#1f9d6b"]];
+ $("kanban").innerHTML=cols.map(([k,l,c])=>{const L=P.filter(p=>kelas(p)===k);return `<div class="col"><h3><span style="width:10px;height:10px;border-radius:50%;background:${c}"></span>${l}<span class="cnt">${L.length}</span></h3>
+ ${L.map(p=>`<div class="kcard ${p.id===cur?"sel":""}" onclick="pick(${p.id})" tabindex="0"><b>${p.n}</b><div class="r">${rlb(p)!=null?"RLB "+fmt(rlb(p))+"×":"uji cepat positif"}</div><div style="margin-top:6px">${k==="merah"?(p.sent?`<span class="chip c-hijau">Terkirim</span>`:`<span class="chip c-merah">Belum dikirim</span>`):k==="kuning"?`<button class="btn" style="min-height:32px;padding:4px 10px;font-size:12.5px" onclick="event.stopPropagation();pick(${p.id});go('uji')">Konfirmasi →</button>`:""}</div></div>`).join("")||`<div class="small muted" style="padding:10px">Kosong</div>`}</div>`}).join("");
+ const p=P.find(x=>x.id===cur);
+ if(kelas(p)!=="merah"){$("ticket").innerHTML=`<div class="card empty">${ico("i-send",'style="width:36px;height:36px;color:var(--pri)"')}<p>Pilih kartu di kolom <b>Siap dilaporkan</b> untuk membuat paket bukti.<br><span class="small">Sampel aktif: ${p.n} (${kelas(p)||"belum diuji"})</span></p></div>`;return}
+ $("ticket").innerHTML=`<div class="ticket"><div class="th"><div><div class="small" style="opacity:.85">PAKET BUKTI · RAHASIA</div><b style="font-family:Space Grotesk;font-size:19px">${p.n}</b></div><span class="mono">#TTR-${String(p.id).slice(-4)}</span></div>
+ <div class="tb"><div><span>Kategori</span>${p.c}</div><div><span>Nomor bets</span>${$("bets").value||"–"}</div><div><span>Kadar Hg</span><b class="mono">${fmt(p.kadar,2)} mg/kg</b></div><div><span>Rasio Lampau Batas</span><b class="mono" style="color:var(--red)">${fmt(rlb(p))}×</b></div>
+ <div><span>Penguji</span>${$("penguji").value||"–"}</div><div><span>Dosen penyelia</span>${$("dosen").value||"–"}</div><div><span>Skor prioritas</span>${score(p)}</div><div><span>Dasar batas</span>Peraturan BPOM 12/2019</div></div>
+ <div class="perf"></div><div class="tf"><button class="btn" onclick="dl()">${ico("i-dl")}Unduh .txt</button><button class="btn pri" ${p.sent?"disabled":""} onclick="kirim()">${ico("i-send")}${p.sent?"Sudah terkirim":"Kirim ke BBPOM"}</button></div>
+ <div class="stamp ${p.sent?"on":""}">TERKIRIM</div></div>`;
+}
+["bets","penguji","dosen"].forEach(i=>$(i).addEventListener("input",renderLapor));
+function kirim(){const p=P.find(x=>x.id===cur);p.sent=true;p.bpom=p.bpom||"tunggu";render();toast("Paket terkirim ke Balai Besar POM","i-send")}
+function dl(){const p=P.find(x=>x.id===cur);const t=`PAKET BUKTI TITRA (RAHASIA)\nProduk: ${p.n}\nKategori: ${p.c}\nNomor bets: ${$("bets").value||"-"}\nKadar Hg: ${fmt(p.kadar,2)} mg/kg\nBatas: 1 mg/kg (Peraturan BPOM 12/2019)\nRasio Lampau Batas: ${fmt(rlb(p))}\nPenguji: ${$("penguji").value||"-"}\nDosen penyelia: ${$("dosen").value||"-"}\nKanal: HALOBPOM 1500533\nCatatan: keputusan penarikan sepenuhnya kewenangan BPOM.`;
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/plain"}));a.download="paket-bukti-titra.txt";a.click()}
+
+/* DASBOR */
+function renderDash(){
+ const red=P.filter(p=>kelas(p)==="merah"),sent=red.filter(p=>p.sent),dini=sent.filter(p=>p.bpom==="dini").length;
+ const k=[["Produk dipantau",P.length,"#6c3cf0"],["Sudah diuji",P.filter(p=>kelas(p)).length,"#0fa3a3"],["Kelas merah",red.length,"#e5484d"],["Paket terkirim",sent.length,"#14213d"]];
+ $("kpi").innerHTML=k.map(([l,v,c])=>`<div class="card stat"><div class="n" style="color:${c}">${v}</div><div class="small muted" style="margin-top:6px">${l}</div></div>`).join("");
+ const pct=sent.length?dini/sent.length*100:0;
+ $("ttdArc").style.strokeDashoffset=377-377*pct/100;$("ttdTxt").textContent=fmt(pct,0)+"%";
+ const lbl={dini:["Dikonfirmasi lebih dulu","hijau"],tunggu:["Menunggu BPOM","kuning"],telat:["Sudah di peringatan publik","merah"]};
+ $("ttdList").innerHTML=red.map(p=>`<div class="srow"><span>${p.n}</span>${p.sent?`<button onclick="cyc(${p.id})" aria-label="Ubah status">${`<span class="chip c-${lbl[p.bpom||"tunggu"][1]}">${lbl[p.bpom||"tunggu"][0]}</span>`}</button>`:`<button onclick="pick(${p.id});go('lapor')"><span class="chip c-abu">Belum dikirim →</span></button>`}</div>`).join("")||`<p class="small muted">Belum ada produk kelas merah.</p>`;
+}
+function cyc(id){const p=P.find(x=>x.id===id),o=["tunggu","dini","telat"];p.bpom=o[(o.indexOf(p.bpom||"tunggu")+1)%3];render()}
+
+function render(){renderPantau();renderUji();renderLapor();renderDash()}
+navs();showColor(...colorAt(8),8);
+go(PAGES.some(p=>p[0]===location.hash.slice(1))?location.hash.slice(1):"beranda");
+</script>
+</body>
+</html>
